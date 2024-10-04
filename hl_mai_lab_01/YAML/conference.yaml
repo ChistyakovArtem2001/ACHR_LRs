@@ -1,0 +1,369 @@
+openapi: '3.0.0'
+info:
+  version: '1.0.0'
+  title: 'Arch Lab Example API'
+  description: API для конференций
+servers:
+  - url: http://localhost:8888
+    description: Example server
+paths:
+  /reporttoconf:
+    get:   
+      summary: Вывод докладов в конференции
+      parameters:
+      - name: id
+        description: Уникальный идентификатор конференции
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/id'
+      responses:
+        '200':
+          description: Найденные доклады в конференции
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conferences'
+        404:
+          description: Конференция не найдена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Неожиданная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /conferences:
+    get:
+      summary: Чтение информации о конференции
+      parameters:
+      - name: user_id
+        description: Уникальный идентификатор конференции
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/id'
+      responses:
+        '200':
+          description: Найденная конференция
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conferences'
+        404:
+          description: Конференция не найдена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Неожиданная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      summary: Добавление доклада в конференцию
+      parameters:
+      - name: id
+        description: Уникальный идентификатор конференции
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/id'
+      - name: talks
+        description: Идентификатор доклада
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Добавленный доклад
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conference'
+        404:
+          description: Конференция не найдена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Неожиданная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /conference:
+    get:
+      summary: Чтение информации о конференции
+      parameters:
+      - name: id
+        description: Уникальный идентификатор конференции
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/id'
+      responses:
+        '200':
+          description: Найденная конференция
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/conference'
+        404:
+          description: Конференция не найдена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Неожиданная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      summary: Обновление информации о конференции
+      parameters:
+      - name: id
+        description: Идентификатор доклада
+        in: query
+        required: true
+        schema:
+          type: integer
+          default: 1
+      - name: user_id
+        description: Идентификатор пользователя
+        in: query
+        required: true
+        schema:
+          type: integer
+          default: 1
+      - name: title
+        description: Описание конференции
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: type
+        description: Тип конференции
+        in: query
+        required: true
+        schema:
+          type: string
+
+      - name: location
+        description: Локация
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: description
+        description: Краткое описание
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: date
+        description: Дата
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: talks
+        description: Уникальный идентификатор доклада
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: topic
+        description: Ключевые слова
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Идентификатор обновленной конференции
+          content:
+            application/json:
+              schema:
+                type: integer
+        404:
+          description: Ошибка обновления конференции
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Неожиданная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Добавление новой конференции
+      parameters:
+      - name: id
+        description: Идентификатор конференции
+        in: query
+        required: true
+        schema:
+          type: integer
+          default: 1
+      - name: user_id
+        description: Идентификатор пользователя
+        in: query
+        required: true
+        schema:
+          type: integer
+          default: 1
+      - name: title
+        description: Описание конференции
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: type
+        description: Тип конференции
+        in: query
+        required: true
+        schema:
+          type: string
+
+      - name: location
+        description: Локация
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: description
+        description: Краткое описание
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: date
+        description: Дата
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: talks
+        description: Уникальный идентификатор доклада
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: topic
+        description: Ключевые слова
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Идентификатор созданной конференции
+          content:
+            application/json:
+              schema:
+                type: integer
+        404:
+          description: Ошибка добавления конференции
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Неожиданная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      summary: Удаление конференции
+      parameters:
+      - name: id
+        description: Идентификатор конференции
+        in: query
+        required: true
+        schema:
+          type: integer
+          default: 1
+    
+      responses:
+        '200':
+          description: Идентификатор, удаленной конференции
+          content:
+            application/json:
+              schema:
+                type: integer
+        404:
+          description: Ошибка добавления конференции
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Неожиданная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    id:
+      description: Уникальный идентификатор
+      type: integer
+    conferences:
+      type: array
+      items:
+        $ref: '#/components/schemas/conference'
+    conference:
+      type: object
+      properties:
+        id:
+          type: integer
+        user_id:
+          type: integer
+        title:
+          type: string
+        type:
+          type: string
+        location:
+          type: string
+        date:
+          type: string
+        description:
+          type: object
+          properties:
+            topic:
+              type: string
+            descriptions:
+              type: string
+        talks:
+          type: array
+
+
+    Error:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          description: Сообщение о ошибке
+          type: string
+  securitySchemes:
+      basicAuth:     
+        type: http
+        scheme: basic
+security:
+  - basicAuth: []
